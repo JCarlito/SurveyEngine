@@ -4,7 +4,7 @@
  *
  * Created on March 24, 2023, 8:14 PM
  * Purpose: Create a SignIn Class
- * Version: 8, Changing character arrays in UserInfo struct to strings.
+ * Version: 10, Changed how files are opened and closed.
  */
 
 // C++ Libraries
