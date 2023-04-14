@@ -25,7 +25,7 @@ private:
     vector<UserInfo> userInfo;
 public:
     Admin(){
-        username = "SurveyEngine";
+        username = "";
     }
     Admin(string u);
 
