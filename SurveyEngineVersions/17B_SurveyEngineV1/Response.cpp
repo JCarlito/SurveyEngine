@@ -23,8 +23,10 @@ void ResponseClass::takeSurvey() {
             int answer;
             cout << "Enter your answer (1-" << question.answers.size() << "): ";
             cin >> answer;
-            while (answer < 1 || answer > question.answers.size()){
-                
+            while (answer < 1 || answer > question.answers.size()) {
+                cout << "You entered an invalid response!" << endl;
+                cout << "Try again: ";
+                cin >> answer;
             }
 
             // Store response
@@ -40,34 +42,39 @@ void ResponseClass::takeSurvey() {
             }
 
             vector<int> answerIndices;
+            int counter = 0;
             int answer;
+            cout << "This is a multi-answer question. Once you are satisfied";
+            cout << " with you responses press (0):" << endl;
             cout << "Enter the number of the answer that applies (1-";
             cout << question.answers.size() << "): ";
             cin >> answer;
-            while (answer < 0 || answer > question.answers.size() || (answer == 1 && answerIndices.empty())) {
+            cin.ignore();
+            while (answer == 0 && counter == 0) {
+                cout << "You have to respond!" << endl;
                 cout << "Enter the number of the answer that applies (1-";
-                cout << question.answers.size() << "), or enter 0 to continue: ";
+                cout << question.answers.size() << "): ";
                 cin >> answer;
+                cin.ignore();
             }
-
-            // Store responses
-            while (answer != 0) {
-                answerIndices.push_back(answer);
-                Response tempResponse;
-                tempResponse.question = question.question;
-                tempResponse.questionNumber = question.questionNumber;
-                tempResponse.answers.push_back(question.answers[answer - 1]);
-                response.responses.push_back(tempResponse);
-
-                if (answerIndices.size() < question.answers.size()) {
-                    do {
-                        cout << "Enter the number of another answer that applies (1-" << question.answers.size() << "), or enter 0 to continue: ";
-                        cin >> answer;
-                    } while (answer < 0 || answer > question.answers.size() || find(answerIndices.begin(), answerIndices.end(), answer) != answerIndices.end());
-                } else {
-                    answer = 0;
+            counter++;
+            answerIndices.push_back(answer - 1);
+            while (answer != 0 && counter < question.answers.size()) {
+                cout << "Enter the next number of the answer that applies (1-";
+                cout << question.answers.size() << ") or (0) to continue: ";
+                cin >> answer;
+                cin.ignore();
+                if (answer != 0) {
+                    answerIndices.push_back(answer - 1);
                 }
             }
+            Response tempResponse;
+            tempResponse.question = question.question;
+            tempResponse.questionNumber = question.questionNumber;
+            for (auto& response : answerIndices) {
+                tempResponse.answers.push_back(question.answers[response]);
+            }
+            response.responses.push_back(tempResponse);
         }
     }
 }

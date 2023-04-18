@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=Cygwin-Windows
 CND_ARTIFACT_DIR_Debug=dist/Debug/Cygwin-Windows
-CND_ARTIFACT_NAME_Debug=17b_surveryenginev0
-CND_ARTIFACT_PATH_Debug=dist/Debug/Cygwin-Windows/17b_surveryenginev0
+CND_ARTIFACT_NAME_Debug=17b_surveyenginev0
+CND_ARTIFACT_PATH_Debug=dist/Debug/Cygwin-Windows/17b_surveyenginev0
 CND_PACKAGE_DIR_Debug=dist/Debug/Cygwin-Windows/package
-CND_PACKAGE_NAME_Debug=17bsurveryenginev0.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/Cygwin-Windows/package/17bsurveryenginev0.tar
+CND_PACKAGE_NAME_Debug=17bsurveyenginev0.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/Cygwin-Windows/package/17bsurveyenginev0.tar
 # Release configuration
 CND_PLATFORM_Release=Cygwin-Windows
 CND_ARTIFACT_DIR_Release=dist/Release/Cygwin-Windows
-CND_ARTIFACT_NAME_Release=17b_surveryenginev0
-CND_ARTIFACT_PATH_Release=dist/Release/Cygwin-Windows/17b_surveryenginev0
+CND_ARTIFACT_NAME_Release=17b_surveyenginev0
+CND_ARTIFACT_PATH_Release=dist/Release/Cygwin-Windows/17b_surveyenginev0
 CND_PACKAGE_DIR_Release=dist/Release/Cygwin-Windows/package
-CND_PACKAGE_NAME_Release=17bsurveryenginev0.tar
-CND_PACKAGE_PATH_Release=dist/Release/Cygwin-Windows/package/17bsurveryenginev0.tar
+CND_PACKAGE_NAME_Release=17bsurveyenginev0.tar
+CND_PACKAGE_PATH_Release=dist/Release/Cygwin-Windows/package/17bsurveyenginev0.tar
 #
 # include compiler specific variables
 #

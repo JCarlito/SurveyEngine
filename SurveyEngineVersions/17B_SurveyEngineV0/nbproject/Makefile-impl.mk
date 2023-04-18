@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=17B_SurveryEngineV0
+PROJECTNAME=17B_SurveyEngineV0
 
 # Active Configuration
 DEFAULTCONF=Debug
