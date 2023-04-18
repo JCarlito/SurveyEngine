@@ -16,9 +16,6 @@ int main(int argc, char** argv) {
 //    Admin admin("test");
 //    admin.readSurveys();
     user.displaySurveyInformation();
-    user.getSurvey();
-    user.takeSurvey();
-    user.displaySurveyResponse();
     
     return 0;
 }

@@ -30,10 +30,6 @@ public:
     void displaySurveyInformation() {
         features.displayActiveSurveyInformation();
     }
-
-    void takeSurvey();
-
-    void displaySurveyResponse();
 };
 
 #endif /* RESPONSE_H */
