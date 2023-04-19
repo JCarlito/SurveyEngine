@@ -12,14 +12,15 @@
 
 class ResponseClass {
 private:
-    string username;
+//    string username;
     SurveyResponse response;
+    vector<SurveyResponse> data;
     Survey survey;
     Admin features;
 public:
 
     ResponseClass(string u) {
-        username = u;
+        response.username = u;
         features.readSurveys();
     }
 
@@ -32,8 +33,9 @@ public:
     }
 
     void takeSurvey();
-
     void displaySurveyResponse();
+    void writeUserResponse();
+    bool surveyTaken();
 };
 
 #endif /* RESPONSE_H */

@@ -11,6 +11,93 @@ Admin::Admin(string u) {
     username = u;
 }
 
+void Admin::displayAllSurveyResponses() {
+    for (const auto& response : responses) {
+        cout << "Username: " << response.username << endl;
+        cout << "Survey Name: " << response.name << endl << endl;
+
+        for (const auto& singleResponse : response.responses) {
+            cout << "Question #" << singleResponse.questionNumber << ": ";
+            cout << singleResponse.question << endl;
+
+            // Display user's answers for each question
+            for (const auto& answer : singleResponse.answers) {
+                cout << "  " << answer << endl;
+            }
+            cout << endl;
+        }
+    }
+}
+
+void Admin::readUserResponses() {
+    responses.clear();
+    fstream binaryUserResponse;
+    int tempUsernameLength = 0;
+    int tempSurveyNameLength = 0;
+    int tempQuestionLength = 0;
+    int tempAnswerLength = 0;
+    int numberOfResponses, numberOfAnswers;
+    string tempUsername;
+    string tempSurveyName;
+    string tempQuestion;
+    string tempAnswer;
+
+    binaryUserResponse.open("UserResponses.bin", ios::in | ios::binary);
+
+    // Check if the file is open
+    if (!binaryUserResponse.is_open()) {
+        cout << "Error: Unable to open the file 'UserResponses.bin'." << endl;
+        return;
+    }
+
+    // Read in user responses from the binary file
+    while (binaryUserResponse.read(reinterpret_cast<char*>(&tempUsernameLength), sizeof (int))) {
+        SurveyResponse tempResponse;
+
+        // Read username
+        tempUsername.resize(tempUsernameLength);
+        binaryUserResponse.read(&tempUsername[0], tempUsernameLength);
+        tempResponse.username = tempUsername;
+
+        // Read name of the survey that was responded to
+        binaryUserResponse.read(reinterpret_cast<char*>(&tempSurveyNameLength), sizeof (int));
+        tempSurveyName.resize(tempSurveyNameLength);
+        binaryUserResponse.read(&tempSurveyName[0], tempSurveyNameLength);
+        tempResponse.name = tempSurveyName;
+
+        // Read the number of responses
+        binaryUserResponse.read(reinterpret_cast<char*>(&numberOfResponses), sizeof (int));
+        for (int i = 0; i < numberOfResponses; ++i) {
+            Response tempSingleResponse;
+
+            // Read question
+            binaryUserResponse.read(reinterpret_cast<char*>(&tempQuestionLength), sizeof (int));
+            tempQuestion.resize(tempQuestionLength);
+            binaryUserResponse.read(&tempQuestion[0], tempQuestionLength);
+            tempSingleResponse.question = tempQuestion;
+
+            // Read question number
+            binaryUserResponse.read(reinterpret_cast<char*>(&tempSingleResponse.questionNumber), sizeof (int));
+
+            // Read the number of user answers
+            binaryUserResponse.read(reinterpret_cast<char*>(&numberOfAnswers), sizeof (int));
+            for (int j = 0; j < numberOfAnswers; ++j) {
+                // Read user's answer(s)
+                binaryUserResponse.read(reinterpret_cast<char*>(&tempAnswerLength), sizeof (int));
+                tempAnswer.resize(tempAnswerLength);
+                binaryUserResponse.read(&tempAnswer[0], tempAnswerLength);
+                tempSingleResponse.answers.push_back(tempAnswer);
+            }
+
+            tempResponse.responses.push_back(tempSingleResponse);
+        }
+
+        responses.push_back(tempResponse);
+    }
+
+    binaryUserResponse.close();
+}
+
 void Admin::readSurveys() {
     surveys.clear();
     Survey tempSurvey;

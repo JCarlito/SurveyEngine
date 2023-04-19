@@ -23,6 +23,7 @@ private:
     SurveyGenerator generator;
     vector<Survey> surveys;
     vector<UserInfo> userInfo;
+    vector<SurveyResponse> responses;
 public:
     Admin(){
         username = "";
@@ -85,7 +86,7 @@ public:
     }
 
     void readSurveys();
-
+    void readUserResponses();
     void displayAllSurveys();
     void displaySurveyInformation();
     int findSurveyName(string surveyName);
@@ -99,6 +100,7 @@ public:
     void displayUserInfoMenu();
     Survey getSurvey();
     void displayActiveSurveyInformation();
+    void displayAllSurveyResponses();
 };
 
 #endif /* ADMIN_H */

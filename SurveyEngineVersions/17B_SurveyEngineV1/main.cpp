@@ -12,14 +12,21 @@
 
 int main(int argc, char** argv) {
     int stop = 0;
-    ResponseClass user("test");
-//    Admin admin("test");
-//    admin.readSurveys();
-    user.displaySurveyInformation();
-    user.getSurvey();
-    user.takeSurvey();
-    user.displaySurveyResponse();
-    
+//    ResponseClass user("jcar");
+        Admin admin("test");
+        admin.readUserResponses();
+        admin.displayAllSurveyResponses();
+//        admin.readSurveys();
+//    user.displaySurveyInformation();
+//    user.getSurvey();
+//    if (!user.surveyTaken()) {
+//        user.takeSurvey();
+//        user.displaySurveyResponse();
+//        user.writeUserResponse();
+//    } else {
+//        cout << "The survey was already taken" << endl;
+//    }
+
     return 0;
 }
 

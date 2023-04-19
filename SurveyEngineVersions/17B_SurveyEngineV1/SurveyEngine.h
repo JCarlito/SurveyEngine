@@ -48,6 +48,7 @@ struct Response {
 };
 
 struct SurveyResponse {
+    string username; // user's username
     string name; // name of the survey
     vector<Response> responses; // survey response
 };
