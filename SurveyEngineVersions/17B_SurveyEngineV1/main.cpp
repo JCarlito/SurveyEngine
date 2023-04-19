@@ -12,20 +12,21 @@
 
 int main(int argc, char** argv) {
     int stop = 0;
-//    ResponseClass user("jcar");
-        Admin admin("test");
-        admin.readUserResponses();
-        admin.displayAllSurveyResponses();
-//        admin.readSurveys();
-//    user.displaySurveyInformation();
-//    user.getSurvey();
-//    if (!user.surveyTaken()) {
-//        user.takeSurvey();
-//        user.displaySurveyResponse();
-//        user.writeUserResponse();
-//    } else {
-//        cout << "The survey was already taken" << endl;
-//    }
+
+    Admin admin("test");
+    admin.readSurveys();
+    admin.readUserResponses();
+    admin.displaySurveyData("Test123");
+    //    ResponseClass user("test");
+    //    user.displaySurveyInformation();
+    //    user.getSurvey();
+    //    if (!user.surveyTaken()) {
+    //        user.takeSurvey();
+    //        user.displaySurveyResponse();
+    //        user.writeUserResponse();
+    //    } else {
+    //        cout << "The survey was already taken" << endl;
+    //}
 
     return 0;
 }

@@ -14,6 +14,8 @@
 #include <vector>
 #include <algorithm>
 #include <fstream>
+#include <map>
+#include <utility>
 
 using namespace std;
 
@@ -51,6 +53,18 @@ struct SurveyResponse {
     string username; // user's username
     string name; // name of the survey
     vector<Response> responses; // survey response
+};
+
+struct Data {
+    string question;
+    int questionNumber;
+    vector<pair<string, int>> answerData;
+    
+};
+
+struct SurveyData {
+    string name;
+    vector<Data> data;
 };
 
 #endif /* SURVEYENGINE_H */

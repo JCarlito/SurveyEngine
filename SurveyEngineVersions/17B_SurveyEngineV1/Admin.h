@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   Admin.h
  * Author: Josh Carlito
@@ -21,11 +15,15 @@ private:
     string username;
     int userInfoIndex;
     SurveyGenerator generator;
+    SurveyData data;
     vector<Survey> surveys;
     vector<UserInfo> userInfo;
     vector<SurveyResponse> responses;
+    int findTargetData(const vector<pair<string, int>>&answerData,
+            const string& answer);
 public:
-    Admin(){
+
+    Admin() {
         username = "";
     }
     Admin(string u);
@@ -42,41 +40,6 @@ public:
         generator.createQuestion();
     }
 
-    void displayFoundSurvey(string surveyName) {
-        int optionNumber;
-        int index = findSurveyName(surveyName);
-        if (index != -1) {
-            // Display survey name
-            cout << "Survey name: " << surveys[index].name << endl;
-            cout << "Total number of questions: " << surveys[index].totalQuestions << endl;
-            // Iterate through the questions in the survey
-            for (const auto& question : surveys[index].questions) {
-                optionNumber = 1;
-                cout << "Question #" << question.questionNumber << ": " << question.question << endl;
-                cout << "Answer options:" << endl;
-                // Display answer options for each question
-                for (const auto& answer : question.answers) {
-                    cout << "  " << optionNumber << ") " << answer << endl;
-                    optionNumber++;
-                }
-                // Display question type (single or multiple response)
-                if (question.singleAnswer) {
-                    cout << "Type: Single response" << endl;
-                } else {
-                    cout << "Type: Multiple response" << endl;
-                }
-                cout << endl; // Add a line break between questions
-            }
-            if (surveys[index].status) {
-                cout << "Status: Active" << endl;
-            } else {
-                cout << "Status: Inactive" << endl;
-            }
-        } else {
-            cout << endl << "SURVEY NOT FOUND!" << endl << endl;
-        }
-    }
-
     void writeSurvey() {
         generator.writeSurvey();
     }
@@ -85,6 +48,11 @@ public:
         generator.setSurveyStatus();
     }
 
+    void fillSurveyData(const string& surveyName);
+    void displaySurveyData(const string& surveyName);
+    void displaySpecificSurveyResponse(string u);
+    void displayResponsesOverview();
+    void displayFoundSurvey(string surveyName);
     void readSurveys();
     void readUserResponses();
     void displayAllSurveys();

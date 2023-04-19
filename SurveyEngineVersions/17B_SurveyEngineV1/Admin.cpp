@@ -26,6 +26,140 @@ void Admin::displayAllSurveyResponses() {
             }
             cout << endl;
         }
+        cout << "-----------------------------------------------------------";
+        cout << endl;
+    }
+}
+
+void Admin::fillSurveyData(const string& surveyName) {
+    data.name = surveyName;
+    data.data.clear();
+
+    // Find the survey with the given name
+    int surveyIndex = findSurveyName(surveyName);
+    if (surveyIndex == -1) {
+        cout << "Error: Survey not found!" << endl;
+        return;
+    }
+
+    const Survey& targetSurvey = surveys[surveyIndex];
+
+    // Initialize Data objects for each question
+    for (const auto& question : targetSurvey.questions) {
+        Data tempData;
+        tempData.question = question.question;
+        tempData.questionNumber = question.questionNumber;
+
+        for (const auto& answer : question.answers) {
+            tempData.answerData.push_back(make_pair(answer, 0));
+        }
+
+        data.data.push_back(tempData);
+    }
+
+    // Iterate through responses and update the data
+    for (const auto& response : responses) {
+        if (response.name == surveyName) {
+            for (const auto& singleResponse : response.responses) {
+                for (const auto& answer : singleResponse.answers) {
+                    int questionNumber = singleResponse.questionNumber;
+                    const vector<pair<string, int>>&answerData = data.data[questionNumber - 1].answerData;
+
+                    // Find the index of the selected answer in the answerData vector
+                    int answerIndex = findTargetData(answerData, answer);
+
+                    // Update the count for the selected answer
+                    if (answerIndex != -1) {
+                        data.data[questionNumber - 1].answerData[answerIndex].second++;
+                    }
+                }
+            }
+        }
+    }
+}
+
+int Admin::findTargetData(const vector<pair<string, int>>& answerData, const string& answer) {
+    for (int i = 0; i < answerData.size(); i++) {
+        if (answerData[i].first == answer) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+void Admin::displaySurveyData(const string& surveyName) {
+    fillSurveyData(surveyName);
+    if (data.name.empty()) {
+        return;
+    }
+    cout << data.name << " DATA" << endl << endl;
+
+    for (const auto& questionData : data.data) {
+        cout << "Question #" << questionData.questionNumber << ": " << questionData.question << endl;
+
+        for (const auto& answerCount : questionData.answerData) {
+            //            string tempQuestion = answerCount.first;
+            int tempAnswerData = answerCount.second;
+            if (tempAnswerData > 0)
+                cout << "  " << setw(30) << left << answerCount.first;
+            else cout << "  " << answerCount.first;
+            for (int i = 0; i < tempAnswerData; i++) {
+                cout << "#";
+                //                if (i == 0) cout << setw(30 - answerCount.first.length()) << right;
+            }
+            cout << endl;
+        }
+        cout << endl;
+    }
+}
+
+void Admin::displayResponsesOverview() {
+    cout << "RESPONSES OVERVIEW" << endl << endl;
+    cout << left << setw(25);
+    cout << "USERNAME";
+    cout << setw(25) << "SURVEYS TAKEN" << endl;
+
+    // Store the count of surveys taken by each user
+    map<string, int> userSurveys;
+
+    for (const auto& response : responses) {
+        // If user isn't in the map add them
+        if (userSurveys.find(response.username) == userSurveys.end()) {
+            userSurveys[response.username] = 1;
+        } else {
+            // else increment their count
+            userSurveys[response.username]++;
+        }
+    }
+
+    // Display the map's contents
+    for (const auto& userSurvey : userSurveys) {
+
+        cout << setw(25) << userSurvey.first;
+        cout << setw(25) << userSurvey.second << endl;
+    }
+}
+
+void Admin::displaySpecificSurveyResponse(string u) {
+    for (const auto& response : responses) {
+        if (response.username == u) {
+            cout << "Username: " << response.username << endl;
+            cout << "Survey Name: " << response.name << endl << endl;
+
+            for (const auto& singleResponse : response.responses) {
+                cout << "Question #" << singleResponse.questionNumber << ": ";
+                cout << singleResponse.question << endl;
+
+                // Display user's answers for each question
+                for (const auto& answer : singleResponse.answers) {
+
+                    cout << "  " << answer << endl;
+                }
+                cout << endl;
+            }
+            cout << "-----------------------------------------------------------";
+            cout << endl;
+        }
     }
 }
 
@@ -83,6 +217,7 @@ void Admin::readUserResponses() {
             binaryUserResponse.read(reinterpret_cast<char*>(&numberOfAnswers), sizeof (int));
             for (int j = 0; j < numberOfAnswers; ++j) {
                 // Read user's answer(s)
+
                 binaryUserResponse.read(reinterpret_cast<char*>(&tempAnswerLength), sizeof (int));
                 tempAnswer.resize(tempAnswerLength);
                 binaryUserResponse.read(&tempAnswer[0], tempAnswerLength);
@@ -138,6 +273,7 @@ void Admin::readSurveys() {
                 binarySurveyFile.read(reinterpret_cast<char*> (&numOfAnswers), sizeof (int));
 
                 for (int j = 0; j < numOfAnswers; j++) {
+
                     binarySurveyFile.read(reinterpret_cast<char*> (&tempAnswerLength), sizeof (int));
                     string tempAnswer;
                     tempAnswer.resize(tempAnswerLength);
@@ -192,6 +328,7 @@ void Admin::displayAllSurveys() {
         if (survey.status) {
             cout << "Status: Active" << endl;
         } else {
+
             cout << "Status: Inactive" << endl;
         }
         cout << endl;
@@ -202,6 +339,7 @@ int Admin::findSurveyName(string surveyName) {
     int index = 0;
     for (const auto& survey : surveys) {
         if (survey.name == surveyName) {
+
             return index;
         }
         index++;
@@ -216,6 +354,7 @@ void Admin::displaySurveyInformation() {
     cout << setw(25) << "# QUESTIONS";
     cout << setw(25) << "STATUS" << endl;
     for (const auto& survey : surveys) {
+
         cout << setw(30) << survey.name;
         cout << setw(25) << survey.totalQuestions;
         cout << setw(25) << (survey.status ? "ACTIVE" : "INACTIVE");
@@ -231,6 +370,7 @@ void Admin::displayActiveSurveyInformation() {
     ;
     for (const auto& survey : surveys) {
         if (survey.status) {
+
             cout << setw(30) << survey.name;
             cout << setw(25) << survey.totalQuestions;
             cout << endl;
@@ -250,6 +390,7 @@ void Admin::readUserInfo() {
     information.seekg(0, ios::beg);
 
     while (information.read(&tempUsernameLength, sizeof (char))) {
+
         temp.username.resize(tempUsernameLength);
         information.read(&temp.username[0], tempUsernameLength);
 
@@ -273,6 +414,7 @@ void Admin::printAllUserInfo() {
     cout << setw(25) << "ADMIN STATUS";
     cout << setw(25) << "ACCOUNT STATUS" << endl;
     for (int i = 0; i < userInfo.size(); i++) {
+
         cout << setw(25) << userInfo[i].username;
         cout << setw(25) << userInfo[i].password;
         cout << setw(25) << (userInfo[i].adminFlag ? "True" : "False");
@@ -293,6 +435,7 @@ void Admin::changeUserStatus(string username, bool status) {
     }
 
     if (!found) {
+
         cout << "User " << username << " not found" << endl;
     }
 }
@@ -309,6 +452,7 @@ void Admin::changeUserPassword(string username, string password) {
     }
 
     if (!found) {
+
         cout << "User " << username << " not found" << endl;
     }
 }
@@ -329,6 +473,7 @@ void Admin::writeUserInfoChanges() {
     binarySignInFile.seekp(0, ios::beg);
 
     for (int i = 0; i < userInfo.size(); i++) {
+
         tempUsernameLength = userInfo[i].username.size();
         tempPasswordLength = userInfo[i].password.size();
 
@@ -345,6 +490,7 @@ void Admin::writeUserInfoChanges() {
 }
 
 void Admin::displayUsersInfo(string usernameSearch) {
+
     findUsername(usernameSearch);
     cout << endl << "USER INFORMATION" << endl << endl;
     cout << left << setw(25);
@@ -374,11 +520,13 @@ void Admin::findUsername(string usernameSearch) {
 
 
     if (!found) {
+
         cout << "User " << usernameSearch << " not found" << endl;
     }
 }
 
 void Admin::displayUserInfoMenu() {
+
     cout << "USER SIGN-IN INFORMATION OPTIONS:" << endl;
     cout << "To display all user Sign-in Information, press (1)" << endl;
     cout << "To search for a user's Sign-In information, press (2)" << endl;
@@ -393,5 +541,41 @@ Survey Admin::getSurvey() {
     cout << endl << "Enter the name of the survey you'd like to take: ";
     getline(cin, tempSurvey);
     int index = findSurveyName(tempSurvey);
+
     return surveys[index];
+}
+
+void Admin::displayFoundSurvey(string surveyName) {
+    int optionNumber;
+    int index = findSurveyName(surveyName);
+    if (index != -1) {
+        // Display survey name
+        cout << "Survey name: " << surveys[index].name << endl;
+        cout << "Total number of questions: " << surveys[index].totalQuestions << endl;
+        // Iterate through the questions in the survey
+        for (const auto& question : surveys[index].questions) {
+            optionNumber = 1;
+            cout << "Question #" << question.questionNumber << ": " << question.question << endl;
+            cout << "Answer options:" << endl;
+            // Display answer options for each question
+            for (const auto& answer : question.answers) {
+                cout << "  " << optionNumber << ") " << answer << endl;
+                optionNumber++;
+            }
+            // Display question type (single or multiple response)
+            if (question.singleAnswer) {
+                cout << "Type: Single response" << endl;
+            } else {
+                cout << "Type: Multiple response" << endl;
+            }
+            cout << endl; // Add a line break between questions
+        }
+        if (surveys[index].status) {
+            cout << "Status: Active" << endl;
+        } else {
+            cout << "Status: Inactive" << endl;
+        }
+    } else {
+        cout << endl << "SURVEY NOT FOUND!" << endl << endl;
+    }
 }
