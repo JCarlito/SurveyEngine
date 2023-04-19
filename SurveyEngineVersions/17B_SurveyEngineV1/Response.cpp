@@ -67,6 +67,7 @@ void ResponseClass::takeSurvey() {
                 if (answer != 0) {
                     answerIndices.push_back(answer - 1);
                 }
+                counter++;
             }
             Response tempResponse;
             tempResponse.question = question.question;
