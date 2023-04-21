@@ -98,7 +98,6 @@ int main(int argc, char** argv) {
                         admin.displayAllSurveyResponses();
                     } else if (adminInput == 3) {
                         string tempUsername;
-                        string tempSurveyName;
                         cout << "Enter the user's username: ";
                         getline(cin, tempUsername);
                         admin.displayUsersResponses(tempUsername);
@@ -155,19 +154,36 @@ int main(int argc, char** argv) {
         int submitFlag;
         ResponseClass user(interface.getUsername());
         user.displaySurveyInformation();
-        user.getSurvey();
-        user.takeSurvey();
-        user.displaySurveyResponse();
-        cout << "To submit your survey press (1) else press (0)" << endl;
-        cout << "Enter input: ";
-        cin >> submitFlag;
-        cin.ignore();
-        if (submitFlag == 1) {
-            user.writeUserResponse();
-            cout << "Your response was submitted! Thank you for participating";
-            cout << endl;
-        } else {
-            cout << "Your response was retracted." << endl;
+        while (submitFlag != 1 && submitFlag != 3) {
+            user.getSurvey();
+            while (user.surveyTaken()) {
+                int breakout;
+                cout << "You already took that survey!" << endl;
+                cout << "To quit press (3) else press (0): ";
+                cin >> breakout;
+                cin.ignore();
+                if (breakout == 3) {
+                    submitFlag = 3;
+                    exit(0);
+                }
+                user.getSurvey();
+            }
+            user.takeSurvey();
+            user.displaySurveyResponse();
+            cout << "To submit your survey, press (1):" << endl;
+            cout << "To retract your survey and try again, press (2):" << endl;
+            cout << "To retract your survey and quit (3):" << endl;
+
+            cout << "Enter input: ";
+            cin >> submitFlag;
+            cin.ignore();
+            if (submitFlag == 1) {
+                user.writeUserResponse();
+                cout << "Your response was submitted! Thank you for participating";
+                cout << endl;
+            } else {
+                cout << "Your response was retracted." << endl;
+            }
         }
     }
     return 0;
