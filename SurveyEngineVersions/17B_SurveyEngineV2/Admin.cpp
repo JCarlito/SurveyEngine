@@ -63,7 +63,7 @@ void Admin::fillSurveyData(const string& surveyName) {
             for (const auto& singleResponse : response.responses) {
                 for (const auto& answer : singleResponse.answers) {
                     int questionNumber = singleResponse.questionNumber;
-                    const vector<pair<string, int>>&answerData = data.data[questionNumber - 1].answerData;
+                    const vector<pair<string, int> > &answerData = data.data[questionNumber - 1].answerData;
 
                     // Find the index of the selected answer in the answerData vector
                     int answerIndex = findTargetData(answerData, answer);
@@ -78,7 +78,7 @@ void Admin::fillSurveyData(const string& surveyName) {
     }
 }
 
-int Admin::findTargetData(const vector<pair<string, int>>&answerData, const string& answer) {
+int Admin::findTargetData(const vector<pair<string, int> > &answerData, const string& answer) {
     for (int i = 0; i < answerData.size(); i++) {
         if (answerData[i].first == answer) {
             return i;

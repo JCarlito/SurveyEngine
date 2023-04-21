@@ -19,7 +19,7 @@ private:
     vector<Survey> surveys;
     vector<UserInfo> userInfo;
     vector<SurveyResponse> responses;
-    int findTargetData(const vector<pair<string, int>>&answerData,
+    int findTargetData(const vector<pair<string, int> > &answerData,
             const string& answer);
     void fillSurveyData(const string& surveyName);
 public:

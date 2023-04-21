@@ -58,7 +58,7 @@ struct SurveyResponse {
 struct Data {
     string question;
     int questionNumber;
-    vector<pair<string, int>> answerData;
+    vector<pair<string, int> > answerData;
     
 };
 
