@@ -41,6 +41,18 @@ public:
         generator.createQuestion();
     }
 
+    void changeQuestion() {
+        generator.changeQuestion();
+    }
+
+    void changeAnswer() {
+        generator.changeAnswer();
+    }
+
+    void changeSurveyName() {
+        generator.changeName();
+    }
+
     void writeSurvey() {
         generator.writeSurvey();
     }

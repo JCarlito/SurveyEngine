@@ -54,27 +54,36 @@ int main(int argc, char** argv) {
                     } else if (adminInput == 2) {
                         admin.viewSurveyCreation();
                     } else if (adminInput == 3) {
+                        admin.changeQuestion();
+                    } else if (adminInput == 4) {
+                        admin.changeAnswer();
+                    } else if (adminInput == 5) {
+                        admin.changeSurveyName();
+                    } else if (adminInput == 6) {
                         admin.clearSurveyCreation();
                         cout << "Your survey has been cleared!" << endl;
-                    } else if (adminInput == 4) {
+                    } else if (adminInput == 7) {
                         admin.writeSurvey();
                         cout << "Survey has been saved!" << endl;
+                        cout << "The survey can no longer be edited!" << endl;
+                        cout << "If you choose not use it anymore, make it";
+                        cout << " inactive." << endl;
                         admin.readSurveys();
-                    } else if (adminInput == 5) {
-                        admin.displayActiveSurveyInformation();
-                    } else if (adminInput == 6) {
-                        admin.displaySurveyInformation();
-                    } else if (adminInput == 7) {
-                        admin.displayAllSurveys();
                     } else if (adminInput == 8) {
+                        admin.displayActiveSurveyInformation();
+                    } else if (adminInput == 9) {
+                        admin.displaySurveyInformation();
+                    } else if (adminInput == 10) {
+                        admin.displayAllSurveys();
+                    } else if (adminInput == 11) {
                         string tempSurveyName;
                         cout << "Enter the name of the survey you wish to";
                         cout << " display: ";
                         getline(cin, tempSurveyName);
                         admin.displayFoundSurvey(tempSurveyName);
-                    } else if (adminInput == 9) {
+                    } else if (adminInput == 12) {
                         admin.changeSurveyStatus();
-                    } else if (adminInput == 10) {
+                    } else if (adminInput == 13) {
                         admin.writeSurveyChanges();
                         cout << "Your status change has been written!" << endl;
                         admin.readSurveys();

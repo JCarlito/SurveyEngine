@@ -612,17 +612,20 @@ void Admin::displaySurveyInfoMenu() {
     cout << "SURVEY CREATION OPTIONS:" << endl;
     cout << "To create a survey, press (1)" << endl;
     cout << "To review your creation, press (2)" << endl;
-    cout << "To clear your creation, press (3) " << endl;
-    cout << "To save your survey creation, press (4)" << endl << endl;
+    cout << "To change a question, press (3)" << endl;
+    cout << "To change a answer choice, press (4)" << endl;
+    cout << "To change the survey's name, press (5)" << endl;
+    cout << "To clear your creation, press (6) " << endl;
+    cout << "To save your survey creation, press (7)" << endl << endl;
 
 
     cout << "PREVIOUS SURVEY OPTIONS:" << endl;
-    cout << "To view active survey list, press (5)" << endl;
-    cout << "To view a full survey list, press (6)" << endl;
-    cout << "To display all surveys in there entirety, press (7)" << endl;
-    cout << "To display a specific survey, press (8)" << endl;
-    cout << "To change a survey's status, press (9)" << endl;
-    cout << "To write your change, press (10)" << endl;
+    cout << "To view active survey list, press (8)" << endl;
+    cout << "To view a full survey list, press (9)" << endl;
+    cout << "To display all surveys in there entirety, press (10)" << endl;
+    cout << "To display a specific survey, press (11)" << endl;
+    cout << "To change a survey's status, press (12)" << endl;
+    cout << "To write your change, press (13)" << endl;
     cout << "To go back to the previous menu, press (-1)" << endl;
 }
 
